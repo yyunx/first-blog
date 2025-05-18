@@ -2,7 +2,4 @@ baseURL = "https://example.org/"
 languageCode = "en-us"
 title = "My New Hugo Site"
 theme = "stack"
-# config.yaml
-defaults:
-  _default:
-    lastmod: 2023-10-05
+
