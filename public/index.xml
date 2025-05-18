@@ -1,0 +1,1019 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>My New Hugo Site</title>
+        <link>http://localhost:1313/</link>
+        <description>Recent content on My New Hugo Site</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Sun, 18 May 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>CMake构建项目</title>
+        <link>http://localhost:1313/post/cmake/</link>
+        <pubDate>Sun, 18 May 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/cmake/</guid>
+        <description>&lt;h1 id=&#34;使用cmake构建项目&#34;&gt;使用Cmake构建项目
+&lt;/h1&gt;&lt;h2 id=&#34;一cmake构建项目&#34;&gt;一、CMake构建项目
+&lt;/h2&gt;&lt;h3 id=&#34;cmake是什么&#34;&gt;CMake是什么？
+&lt;/h3&gt;&lt;h4 id=&#34;heading&#34;&gt;
+&lt;/h4&gt;&lt;h3 id=&#34;1-构建流程&#34;&gt;1. 构建流程
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;预处理（-E参数  宏替换）&lt;/li&gt;
+&lt;li&gt;编译 gcc/msvc/clang （-S 参数）&lt;/li&gt;
+&lt;li&gt;汇编（-C参数  linux生成.o文件、windows生成.obj文件）&lt;/li&gt;
+&lt;li&gt;连接（将多个二进制文件连接生成一个可执行文件）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;2-windows下使用cmake构建项目&#34;&gt;2. windows下使用cmake构建项目
+&lt;/h3&gt;&lt;h4 id=&#34;21-下载cmake&#34;&gt;2.1 下载cmake
+&lt;/h4&gt;&lt;p&gt;官网下载&lt;a class=&#34;link&#34; href=&#34;https://cmake.org/download/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Download CMake&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;下载msi文件即可&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&amp;#43;&amp;#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250506204144066.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250506204144066&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;22-创建项目&#34;&gt;2.2 创建项目
+&lt;/h4&gt;&lt;p&gt;使用工具：vscode&lt;/p&gt;
+&lt;p&gt;新建一个文件夹，在其中新建一个.cpp的项目文件  以及  一个 CMakeLists.txt的文件&lt;/p&gt;
+&lt;p&gt;在CamkeList.txt中写入以下代码（将注释去掉）&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#这一行指定了 CMake 的最低版本要求。这意味着你需要安装 CMake 3.20 或更高版本才能正确解析这个文件
+cmake_minimum_required(VERSION 3.20)
+#项目名称
+project(Hello)
+#这一行告诉 CMake 创建一个可执行文件（Hello），并指定 hello.cpp 是构建这个可执行文件所需的源文件
+add_executable(Hello hello.cpp)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;示例代码hello.cpp:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#include&amp;lt;iostream&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;using&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;namespace&lt;/span&gt; std;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;main&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; argc, &lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;argv[])
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    cout&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Hello&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;23-编译&#34;&gt;2.3 编译
+&lt;/h4&gt;&lt;h5 id=&#34;1使用默认编译器&#34;&gt;(1)使用默认编译器
+&lt;/h5&gt;&lt;p&gt;命令行中输入：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#默认使用msvc进行编译&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cmake -B build
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cmake --build build
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&amp;#43;&amp;#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250506202446333.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250506202446333&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;编译之后的项目文件目录
+.\Hello\
+├── CMakeLists.txt
+├── hello.cpp
+└── build\
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;运行程序&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;build/Debug/hello.exe
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&amp;#43;&amp;#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250506203320184.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250506203320184&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h5 id=&#34;2使用mingw-makefiles编译器&#34;&gt;（2）使用&amp;quot;MinGW Makefiles&amp;quot;编译器
+&lt;/h5&gt;&lt;p&gt;使用以下命令来查看你可用编译器&lt;/p&gt;
+&lt;p&gt;*在开头的是默认编译器&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cmake --help
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&amp;#43;&amp;#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250506203426221.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250506203426221&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;现在我们指定“MinGW Makefiles”编译器来编译（注意是用“”  不是**）&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cmake -B build -G &amp;#34;MinGW Makefiles&amp;#34;
+cmake --build build
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;执行命令遇到：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&amp;#43;&amp;#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250506203655220.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250506203655220&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;是因为之前已经使用默认编译器编译过了，已经有了一个build的文件夹，可以将之前的build文件夹重新命名一个其他名字，再进行尝试。&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#启动！
+.\build\hello.exe
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&amp;#43;&amp;#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250506203816200.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250506203816200&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;3-linux下使用cmake&#34;&gt;3. Linux下使用cmake
+&lt;/h3&gt;&lt;h4 id=&#34;31-安装cmake&#34;&gt;3.1. 安装cmake
+&lt;/h4&gt;&lt;h5 id=&#34;apt安装&#34;&gt;apt安装
+&lt;/h5&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt-get install cmake
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#查看安装版本&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cmake --version
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#查看编译器&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cmake --help
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&amp;#43;&amp;#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250506210627123.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250506210627123&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;32-编译项目linux下使用默认编译器即可&#34;&gt;3.2 编译项目（Linux下使用默认编译器即可）
+&lt;/h4&gt;&lt;p&gt;项目文件与windows下的文件一样即可&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cmake -B build
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cmake --build build
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&amp;#43;&amp;#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250506210830669.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250506210830669&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;执行程序&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;build/Hello
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&amp;#43;&amp;#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250506211204551.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250506211204551&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;二cmake语法&#34;&gt;二、CMake语法
+&lt;/h2&gt;&lt;h3 id=&#34;1-message--打印&#34;&gt;1. message:  打印
+&lt;/h3&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cmake_grammar/
+└── first.cmake
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;first.cmake:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cmake&#34; data-lang=&#34;cmake&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cmake_minimum_required(&lt;span style=&#34;color:#e6db74&#34;&gt;VERSION&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;3.20&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Hello&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;--------------&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#e6db74&#34;&gt;Hello&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;--------------&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;jfalk
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;jalsdkf&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;--------------&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#e6db74&#34;&gt;[[asdfa&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;asdfef]]&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;--------------&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#获取CMAKE中的信息
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#  ${}
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#f92672&#34;&gt;${&lt;/span&gt;CMAKE_VERSION&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;执行命令&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;camke -P first.cmake
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&amp;#43;&amp;#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250513230839584.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250513230839584&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;2-变量操作--setlist&#34;&gt;2. 变量操作  set、list
+&lt;/h3&gt;&lt;h4 id=&#34;21-set&#34;&gt;2.1 set
+&lt;/h4&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;./../cmake_grammar/
+├── first.cmake
+└── set.cmake
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;set.cmake:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cmake&#34; data-lang=&#34;cmake&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cmake_minimum_required(&lt;span style=&#34;color:#e6db74&#34;&gt;VERSION&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;3.20&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#set用法
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;set(&lt;span style=&#34;color:#e6db74&#34;&gt;Var1&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;ASF&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#f92672&#34;&gt;${&lt;/span&gt;Var1&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;set(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;My Var&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;myvar&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#f92672&#34;&gt;${&lt;/span&gt;My\ Var&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;set(&lt;span style=&#34;color:#e6db74&#34;&gt;[[My&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;Var]]&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;myvar[]&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#f92672&#34;&gt;${&lt;/span&gt;My\ Var&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#设置多个值
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;set(&lt;span style=&#34;color:#e6db74&#34;&gt;serval_Var1&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;a1&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;a2&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#f92672&#34;&gt;${&lt;/span&gt;serval_Var1&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;set(&lt;span style=&#34;color:#e6db74&#34;&gt;serval_var2&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;b1;b2&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#f92672&#34;&gt;${&lt;/span&gt;serval_var2&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# $PATH
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#f92672&#34;&gt;$ENV{&lt;/span&gt;PATH&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#用于将环境变量CXX的值改为“g++”
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;set(&lt;span style=&#34;color:#e6db74&#34;&gt;ENV{CXX}&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;g++&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#f92672&#34;&gt;$ENV{&lt;/span&gt;CXX&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#取消设置环境变量 CXX  将 CXX 的值恢复到执行本代码前的的CXX值
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;unset(&lt;span style=&#34;color:#e6db74&#34;&gt;ENV{CXX}&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#f92672&#34;&gt;$ENV{&lt;/span&gt;CXX&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;执行命令：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cmake -P set.cmake
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&amp;#43;&amp;#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250513232701771.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250513232701771&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;表示已经取消了CXX的值，所以此处再进行打印就会报错&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&amp;#43;&amp;#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250513233502956.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250513233502956&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;22-list&#34;&gt;2.2 list
+&lt;/h4&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;./../cmake_grammar/
+├── first.cmake
+└── set.cmake
+└── list.cmake
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;！注意cmake中的空格&lt;/p&gt;
+&lt;p&gt;list.cmake:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cmake&#34; data-lang=&#34;cmake&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cmake_minimum_required(&lt;span style=&#34;color:#e6db74&#34;&gt;VERSION&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;3.20&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#set与list都可以创建变量
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#e6db74&#34;&gt;=========创建变量============&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;set(&lt;span style=&#34;color:#e6db74&#34;&gt;Var_set&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;set&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;s1&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;s2&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;s3&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#f92672&#34;&gt;${&lt;/span&gt;Var_set&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;list(&lt;span style=&#34;color:#e6db74&#34;&gt;APPEND&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;Var_list&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;list&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;l1&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;l2&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;l3&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#f92672&#34;&gt;${&lt;/span&gt;Var_list&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#获取长度
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#e6db74&#34;&gt;=========获取长度============&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;list(&lt;span style=&#34;color:#e6db74&#34;&gt;LENGTH&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;Var_set&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;len&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#f92672&#34;&gt;${&lt;/span&gt;len&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#找到Var_set中s2这个元素所在的索引  索引是从1开始的
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#e6db74&#34;&gt;=========获取索引============&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;list(&lt;span style=&#34;color:#e6db74&#34;&gt;FIND&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;Var_set&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;s2&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;index&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#f92672&#34;&gt;${&lt;/span&gt;index&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#移除变量中的元素
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#e6db74&#34;&gt;=========移除元素============&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;list(&lt;span style=&#34;color:#e6db74&#34;&gt;REMOVE_ITEM&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;Var_set&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;s2&lt;/span&gt;) &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#f92672&#34;&gt;${&lt;/span&gt;Var_set&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#添加元素
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#e6db74&#34;&gt;=========添加元素============&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;list(&lt;span style=&#34;color:#e6db74&#34;&gt;APPEND&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;Var_set&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;a4&lt;/span&gt;)  &lt;span style=&#34;color:#75715e&#34;&gt;# 直接尾插
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#f92672&#34;&gt;${&lt;/span&gt;Var_set&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;list(&lt;span style=&#34;color:#e6db74&#34;&gt;INSERT&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;Var_set&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;3&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;a5&lt;/span&gt;) &lt;span style=&#34;color:#75715e&#34;&gt;# 指定要插入的位置
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#f92672&#34;&gt;${&lt;/span&gt;Var_set&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#反转、排序
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#e6db74&#34;&gt;=========反转、排序============&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;list(&lt;span style=&#34;color:#e6db74&#34;&gt;REVERSE&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;Var_set&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#f92672&#34;&gt;${&lt;/span&gt;Var_set&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;list(&lt;span style=&#34;color:#e6db74&#34;&gt;SORT&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;Var_set&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#f92672&#34;&gt;${&lt;/span&gt;Var_set&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;执行命令：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cmake -P list.cmake
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&amp;#43;&amp;#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250513235244159.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250513235244159&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;3-流程控制&#34;&gt;3. 流程控制
+&lt;/h3&gt;&lt;h4 id=&#34;31-条件流程控制if&#34;&gt;3.1 条件流程控制（if）
+&lt;/h4&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;./../cmake_grammar/
+├── first.cmake
+└── set.cmake
+└── list.cmake
+└── if.cmake
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;if.cmake:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cmake_minimum_required(VERSION 3.20)
+
+set(FLAG TRUE)
+
+if(FLAG)
+    message(&amp;#34;TRUE&amp;#34;)
+elseif(FLAG OR NOT FLAG)
+    message(&amp;#34;FLAG OR NOT FLAG&amp;#34;)
+elseif(FLAG AND NOT FLAG)
+    message(&amp;#34;FLAG AND NOT FLAG&amp;#34;)
+endif()
+
+message(&amp;#34;==============================&amp;#34;)
+if(1 LESS 2)
+    message(&amp;#34;1 LESS 2&amp;#34;)
+endif()
+
+if(NOT 2 LESS 1)
+    message(&amp;#34;NOT 2 LESS 1&amp;#34;)
+endif()
+
+message(&amp;#34;==============================&amp;#34;)
+if(1 EQUAL &amp;#34;1&amp;#34;)
+    message(&amp;#34;1 EQUAL &amp;#39;1&amp;#39;&amp;#34;)
+endif()
+
+message(&amp;#34;==============================&amp;#34;)
+if(NOT &amp;#34;a&amp;#34; LESS 233)
+    message(&amp;#34;a LESS 233&amp;#34;)
+endif()
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;执行命令：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cmake -P if.make
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&amp;#43;&amp;#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250516223621266.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250516223621266&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h4 id=&#34;32-循环流程控制forwhile&#34;&gt;3.2 循环流程控制（for、while）
+&lt;/h4&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;./../cmake_grammar/
+├── first.cmake
+└── set.cmake
+└── list.cmake
+└── if.cmake
+└── Loop.cmake
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Loop.cmake:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cmake_minimum_required(VERSION 3.20)
+
+foreach(VAR RANGE 3)
+    message(${VAR})
+endforeach(VAR RANGE 3)
+message(&amp;#34;===============================&amp;#34;)
+
+set(MY_LISTS 1 2 3)
+foreach(VAR IN LISTS MY_LISTS)
+    message(${VAR})    
+endforeach()
+message(&amp;#34;===============================&amp;#34;)
+
+#项目中用的较多
+set(LIST 2 3)
+foreach(VAR IN LISTS LIST ITEMS a b 5)
+    message(${VAR})    
+endforeach()
+message(&amp;#34;===============================&amp;#34;)
+
+#zip
+set(L1 one two three)
+set(L2 1 2 3)
+foreach(num IN ZIP_LISTS L1 L2)
+    message(&amp;#34;word=${num_0},num=${num_1}&amp;#34;)    
+endforeach()
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;执行命令：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cmake -P Loop.cmake
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&amp;#43;&amp;#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250516224617346.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250516224617346&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;4-函数&#34;&gt;4. 函数
+&lt;/h3&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;./../cmake_grammar/
+├── first.cmake
+└── set.cmake
+└── list.cmake
+└── if.cmake
+└── Loop.cmake
+└── func.cmake
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;func.cmake:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cmake_minimum_required(VERSION 3.20)
+
+function(MyFunc FirstArg)
+    #当前的函数名
+    message(&amp;#34;MyFunc Name: ${CMAKE_CURRENT_FUNCTION}&amp;#34;)
+    #传入的参数
+    message(&amp;#34;FirstArg ${FirstArg}&amp;#34;)
+    set(FirstArg &amp;#34;new_value&amp;#34;)
+    message(&amp;#34;FirstArg again ${FirstArg}&amp;#34;)
+    #打印参数
+    message(&amp;#34;ARGV0 ${ARGV0}&amp;#34;)
+    message(&amp;#34;ARGV1 ${ARGV1}&amp;#34;)
+    message(&amp;#34;ARGV2 ${ARGV2}&amp;#34;)
+endfunction(MyFunc FirstArg)
+
+
+set(FirstArg &amp;#34;first value&amp;#34;)
+MyFunc(${FirstArg} &amp;#34;second_value&amp;#34;)   #传入参数时，要使用${} 不能直接写变量名
+message(&amp;#34;MainFunc FirstArg: ${FirstArg}&amp;#34;)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;执行命令：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cmake -P func.cmake
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&amp;#43;&amp;#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250516225748876.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250516225748876&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;5-作用域&#34;&gt;5. 作用域
+&lt;/h3&gt;&lt;p&gt;新建一个项目文件夹&lt;/p&gt;
+&lt;p&gt;这只是在CMakeLists.txt中练习cmake的语法，是没有链接可执行文件的&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;./../cmake_grammar/
+├──test_project
+└──其他文件
+
+./../cmake_grammar/test_project/
+├──CMakeLists.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;CMakeLists.txt:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cmake_minimum_required(VERSION 3.20)
+project(scope)
+
+function(OutFunc)
+    message(&amp;#34;-&amp;gt; OutFunc: ${Var}&amp;#34;)
+    set(Var 2)
+    InFunc()
+    message(&amp;#34;&amp;lt;- OutFunc: ${Var}&amp;#34;)
+endfunction(OutFunc)
+
+function(InFunc)
+    message(&amp;#34;-&amp;gt;InFunc: ${Var}&amp;#34;)
+    set(Var 3)
+    message(&amp;#34;&amp;lt;- InFunc: ${Var}&amp;#34;)    
+endfunction(InFunc)
+
+#相当于全局变量
+set(Var 1)
+message(&amp;#34;-&amp;gt; Global: ${Var}&amp;#34;)
+OutFunc()
+message(&amp;#34;&amp;lt;- Global: ${Var}&amp;#34;)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;执行命令：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cmake -B build
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&amp;#43;&amp;#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250516232447857.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250516232447857&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;6-宏&#34;&gt;6. 宏
+&lt;/h3&gt;&lt;p&gt;注意：尽量不要写宏，只要会读&lt;/p&gt;
+&lt;p&gt;宏：作用域比函数更大，在宏内部进行修改时，外部（调用宏的作用域）的变量也会受到改变&lt;/p&gt;
+&lt;p&gt;函数：在函数内部修改变量时，不会影响到外部的变量&lt;/p&gt;
+&lt;h4 id=&#34;61代码实现&#34;&gt;6.1代码实现
+&lt;/h4&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;~/share/C++project/cmake_learn/cmake_grammar$ tree -L 1
+.
+├── first.cmake
+├── func.cmake
+├── if.cmake
+├── list.cmake
+├── Loop.cmake
+├── macro.cmake
+├── set.cmake
+└── test_project
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;macro.cmake :&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cmake_minimum_required(VERSION 3.20)
+
+macro(Test myVar)
+    set(myVar &amp;#34;new_value&amp;#34;)   #创建了一个新的变量
+    message(&amp;#34;macro: ${myVar}&amp;#34;)
+endmacro()
+
+set(myVar &amp;#34;First_value&amp;#34;)
+message(&amp;#34;First: ${myVar}&amp;#34;)
+
+Test(${myVar})
+message(&amp;#34;final: ${myVar}&amp;#34;)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;执行命令：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cmake -P macro.cmake
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&amp;#43;&amp;#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250516235154733.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250516235154733&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;=============================================&lt;/p&gt;
+&lt;h4 id=&#34;62-ai代码分析&#34;&gt;6.2 AI代码分析
+&lt;/h4&gt;&lt;hr&gt;
+&lt;p&gt;（1）定义宏 &lt;code&gt;Test&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cmake&#34; data-lang=&#34;cmake&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;macro(&lt;span style=&#34;color:#e6db74&#34;&gt;Test&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;myVar&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;    set(&lt;span style=&#34;color:#e6db74&#34;&gt;myVar&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;new_value&amp;#34;&lt;/span&gt;)   &lt;span style=&#34;color:#75715e&#34;&gt;# 创建了一个新的变量
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    message(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;macro: ${myVar}&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;endmacro(&lt;span style=&#34;color:#e6db74&#34;&gt;Test&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;myVar&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;macro(Test myVar)&lt;/code&gt; 定义了一个名为 &lt;code&gt;Test&lt;/code&gt; 的宏，它接受一个参数 &lt;code&gt;myVar&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;在宏内部：
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;set(myVar &amp;quot;new_value&amp;quot;)&lt;/code&gt; 尝试将参数 &lt;code&gt;myVar&lt;/code&gt; 设置为 &lt;code&gt;&amp;quot;new_value&amp;quot;&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;message(&amp;quot;macro: ${myVar}&amp;quot;)&lt;/code&gt; 输出宏内部的变量值。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;(2) 设置全局变量 &lt;code&gt;myVar&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cmake&#34; data-lang=&#34;cmake&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;set(&lt;span style=&#34;color:#e6db74&#34;&gt;myVar&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;First_value&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;First: ${myVar}&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;set(myVar &amp;quot;First_value&amp;quot;)&lt;/code&gt; 将全局变量 &lt;code&gt;myVar&lt;/code&gt; 设置为 &lt;code&gt;&amp;quot;First_value&amp;quot;&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;message(&amp;quot;First: ${myVar}&amp;quot;)&lt;/code&gt; 输出当前的 &lt;code&gt;myVar&lt;/code&gt; 值：
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;First: First_value
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;(3) 调用宏 &lt;code&gt;Test&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cmake&#34; data-lang=&#34;cmake&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Test(&lt;span style=&#34;color:#f92672&#34;&gt;${&lt;/span&gt;myVar&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;调用宏 &lt;code&gt;Test&lt;/code&gt;，并传递 &lt;code&gt;${myVar}&lt;/code&gt; 作为参数。此时，&lt;code&gt;${myVar}&lt;/code&gt; 的值是 &lt;code&gt;&amp;quot;First_value&amp;quot;&lt;/code&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;ul&gt;
+&lt;li&gt;关键点：宏的参数传递和作用域&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在 CMake 中，宏的参数是通过 &lt;strong&gt;文本替换&lt;/strong&gt; 来传递的。也就是说，当你调用 &lt;code&gt;Test(${myVar})&lt;/code&gt; 时，宏内部的代码会被展开为：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cmake&#34; data-lang=&#34;cmake&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;set(&lt;span style=&#34;color:#e6db74&#34;&gt;First_value&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;new_value&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;macro: ${First_value}&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;set(First_value &amp;quot;new_value&amp;quot;)&lt;/code&gt; 尝试将变量 &lt;code&gt;First_value&lt;/code&gt; 设置为 &lt;code&gt;&amp;quot;new_value&amp;quot;&lt;/code&gt;，但 &lt;code&gt;First_value&lt;/code&gt; 并不是一个有效的变量名，因此这行代码不会对任何变量产生实际影响。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;message(&amp;quot;macro: ${First_value}&amp;quot;)&lt;/code&gt; 输出宏内部的变量值，但由于 &lt;code&gt;First_value&lt;/code&gt; 并没有被设置，它仍然是 &lt;code&gt;&amp;quot;First_value&amp;quot;&lt;/code&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;===================================输出结果===================================&lt;/p&gt;
+&lt;p&gt;因此，最终的输出是：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;First: First_value
+macro: First_value
+final: new_value
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;===================================为什么 &lt;code&gt;final: new_value&lt;/code&gt;？===================================&lt;/p&gt;
+&lt;p&gt;这里的关键在于 CMake 的变量作用域和宏的特性。在宏内部，&lt;code&gt;set(myVar &amp;quot;new_value&amp;quot;)&lt;/code&gt; 实际上修改了调用宏的作用域中的变量 &lt;code&gt;myVar&lt;/code&gt;。由于宏的作用域特性，宏内部对变量的修改会直接影响调用宏的作用域。&lt;/p&gt;
+&lt;p&gt;在你的代码中，&lt;code&gt;Test(${myVar})&lt;/code&gt; 调用了宏 &lt;code&gt;Test&lt;/code&gt;，并将 &lt;code&gt;${myVar}&lt;/code&gt; 的值 &lt;code&gt;&amp;quot;First_value&amp;quot;&lt;/code&gt; 传递给宏。宏内部的 &lt;code&gt;set(myVar &amp;quot;new_value&amp;quot;)&lt;/code&gt; 实际上修改了全局变量 &lt;code&gt;myVar&lt;/code&gt;，因为宏的作用域特性使得宏内部的变量修改会反映到调用宏的作用域中。&lt;/p&gt;
+&lt;p&gt;===================================总结===================================&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;宏的作用域特性&lt;/strong&gt;：宏内部对变量的修改会直接影响调用宏的作用域。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;参数传递&lt;/strong&gt;：宏的参数是通过文本替换传递的，因此宏内部对参数的修改会直接影响调用宏的作用域中的变量。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;===================================修改后的代码===================================&lt;/p&gt;
+&lt;p&gt;如果你希望避免这种行为，可以使用 &lt;code&gt;function&lt;/code&gt; 替代 &lt;code&gt;macro&lt;/code&gt;，因为 &lt;code&gt;function&lt;/code&gt; 的参数是通过值传递的，不会影响外部变量。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cmake&#34; data-lang=&#34;cmake&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cmake_minimum_required(&lt;span style=&#34;color:#e6db74&#34;&gt;VERSION&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;3.20&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;function(&lt;span style=&#34;color:#e6db74&#34;&gt;Test&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;myVar&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;    set(&lt;span style=&#34;color:#e6db74&#34;&gt;myVar&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;new_value&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;PARENT_SCOPE&lt;/span&gt;)  &lt;span style=&#34;color:#75715e&#34;&gt;# 使用 PARENT_SCOPE 修改外部变量
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    message(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;function: ${myVar}&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;endfunction(&lt;span style=&#34;color:#e6db74&#34;&gt;Test&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;myVar&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;set(&lt;span style=&#34;color:#e6db74&#34;&gt;myVar&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;First_value&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;First: ${myVar}&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;Test(&lt;span style=&#34;color:#e6db74&#34;&gt;myVar&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;message(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;final: ${myVar}&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这样，输出将是：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;First: First_value
+function: new_value
+final: new_value
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;63-与c宏的区别&#34;&gt;6.3 与C++宏的区别
+&lt;/h4&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;特性&lt;/th&gt;
+&lt;th&gt;C++ 宏&lt;/th&gt;
+&lt;th&gt;CMake 宏&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;定义方式&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;#define&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;macro&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;作用域&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;全局，文件范围内有效&lt;/td&gt;
+&lt;td&gt;调用宏的作用域，参数通过文本替换传递&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;用途&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;简化代码、条件编译、调试辅助&lt;/td&gt;
+&lt;td&gt;代码复用、简化 CMake 脚本&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;类型检查&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;没有，纯文本替换&lt;/td&gt;
+&lt;td&gt;有，CMake 语法检查&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;调试难度&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;难，预处理后代码可能难以理解&lt;/td&gt;
+&lt;td&gt;较容易，CMake 提供错误信息&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;==========================================================================&lt;/p&gt;
+&lt;h2 id=&#34;三构建项目的四种方式&#34;&gt;三、构建项目的四种方式
+&lt;/h2&gt;&lt;h3 id=&#34;31-直接写入源码的方式&#34;&gt;3.1 直接写入源码的方式
+&lt;/h3&gt;&lt;p&gt;主要关注：CMakeLists.txt&lt;/p&gt;
+&lt;p&gt;目录结构&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# tree -L 2
+.
+├── animal
+│   ├── dog.cpp
+│   └── dog.h
+├── CMakeLists.txt
+└── main.cpp
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;main.cpp&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#include &amp;lt;iostream&amp;gt;
+#include &amp;#34;animal/dog.h&amp;#34;
+
+using namespace std;
+
+int main(int argc, char const *argv[])
+{
+    /* code */
+    Dog wangcai;
+    string bark= wangcai.barking();
+    cout&amp;lt;&amp;lt;bark&amp;lt;&amp;lt;endl;
+    return 0;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;dog.cpp&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#include &amp;#34;dog.h&amp;#34;
+
+std::string Dog::barking(){
+    return &amp;#34;fuck&amp;#34;;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;dog.h&lt;/p&gt;
+&lt;p&gt;#pragma once：确保头文件的内容在编译过程中只被包含一次。这可以避免重复定义和重复编译的问题。&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#pragma once
+
+#include &amp;lt;string&amp;gt;
+
+class Dog
+{
+public:
+    std::string barking();
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;主要关注&lt;/strong&gt;：CMakeLists.txt:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cmake_minimum_required(VERSION 3.20)
+project(animal CXX)  #将编译器指定为cpp
+add_executable(animal main.cpp animal/dog.cpp)  #将cpp文件构建为一个名为animal的项目
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;执行命令：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#创建构建目录并生成构建文件（创建一个名为build的目录，并在build中创建生成文件，如Makefile等）
+cmake -B build
+#构建项目（根据指定文件build中的构建文件：Makefile等来编译项目并生成可执行文件）
+cmake --build build 
+#执行
+build/animal
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&amp;#43;&amp;#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250517190247620.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250517190247620&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&amp;#43;&amp;#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250517190218964.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;32-调用子目录中的cmake脚本&#34;&gt;3.2 调用子目录中的cmake脚本
+&lt;/h3&gt;&lt;p&gt;include方法可以引入子目录中.cmake后缀的配置文件&lt;/p&gt;
+&lt;p&gt;添加animal.cmake、cat.cpp、cat.h:&lt;/p&gt;
+&lt;p&gt;目录结构&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;├── animal
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;│   ├── animal.cmake
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;│   ├── cat.cpp
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;│   ├── cat.h
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;│   ├── dog.cpp
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;│   └── dog.h
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;├── CMakeLists.txt
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;└── main.cpp
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;CMakeLists.txt:&lt;/p&gt;
+&lt;p&gt;#注意要使用include引入cmake文件&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cmake&#34; data-lang=&#34;cmake&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cmake_minimum_required(&lt;span style=&#34;color:#e6db74&#34;&gt;VERSION&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;3.20&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;project(&lt;span style=&#34;color:#e6db74&#34;&gt;animal&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;CXX&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;include(&lt;span style=&#34;color:#e6db74&#34;&gt;animal/animal.cmake&lt;/span&gt;)  &lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;&lt;/span&gt;add_executable(&lt;span style=&#34;color:#e6db74&#34;&gt;animal&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;main.cpp&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;${&lt;/span&gt;animal_source&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;animal.cmake&lt;/p&gt;
+&lt;p&gt;#注意！！！！&lt;/p&gt;
+&lt;p&gt;不可以是  ：   &lt;em&gt;set(animal_source cat.cpp dog.cpp)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;其实本质：将&lt;em&gt;animal_source&lt;/em&gt;这个变量设置为以下的值。 在CMakeLists.txt中将变量替换为设置的值，所以变量的值要设置为以&lt;em&gt;CMakeLists&lt;/em&gt;为主体时，子文件的相对路径&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-cmake&#34; data-lang=&#34;cmake&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;set(&lt;span style=&#34;color:#e6db74&#34;&gt;animal_source&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;animal/cat.cpp&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;animal/dog.cpp&lt;/span&gt;)&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;cat.h、cat.cpp中随便写一个类，定义类方法。在main.cpp中使用&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#cat.h:
+#pragma once
+
+#include &amp;lt;string&amp;gt;
+
+class Cat
+{
+public:
+    std::string miaow();
+};
+#-----------------------------------------------
+#cat.cpp:
+#include &amp;#34;cat.h&amp;#34;
+
+std::string Cat::miaow(){
+    return &amp;#34;妙啊妙啊&amp;#34;;
+}
+#-----------------------------------------------
+#main.cpp:
+#include &amp;lt;iostream&amp;gt;
+#include &amp;#34;animal/dog.h&amp;#34;
+#include &amp;#34;animal/cat.h&amp;#34;
+
+using namespace std;
+
+int main(int argc, char const *argv[])
+{
+
+    Dog wangcai;
+    string bark= wangcai.barking();
+    cout&amp;lt;&amp;lt;bark&amp;lt;&amp;lt;endl;
+    Cat duoduo;
+    string mao = duoduo.miaow();
+    cout&amp;lt;&amp;lt;mao&amp;lt;&amp;lt;endl;
+    return 0;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;执行命令：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;rm -rf build
+
+cmake -B build 
+
+cmake --build build
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&amp;#43;&amp;#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250517192741770.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250517192741770&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;33-cmakelists嵌套最常见的一种方式&#34;&gt;3.3 CMakeLists嵌套（最常见的一种方式）
+&lt;/h3&gt;&lt;p&gt;CMakeLists.txt 嵌套是指在项目的主 CMakeLists.txt 文件中使用 &lt;code&gt;add_subdirectory()&lt;/code&gt; 命令将子目录的 CMakeLists.txt 文件包含进来，从而构建一个&lt;strong&gt;层次化&lt;/strong&gt;的项目结构。&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;project/
+├── CMakeLists.txt          # 主 CMakeLists.txt
+├── src/
+│   ├── CMakeLists.txt      # 源代码模块的 CMakeLists.txt
+│   └── ...                 # 源代码文件
+├── lib/
+│   ├── CMakeLists.txt      # 库模块的 CMakeLists.txt
+│   └── ...                 # 库文件
+└── ...
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;几个重要的方法&#34;&gt;几个重要的方法：
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;target_include_directories &amp;mdash;头文件目录的声明&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;target_link_libraries  &amp;mdash;  链接库文件&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;add_subdirectory &amp;mdash; 添加子目录&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;add_library  &amp;mdash; 生成库文件（默认  &lt;strong&gt;STATIC library&lt;/strong&gt;）&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;便利&#34;&gt;便利：
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;模块化项目组织&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;允许将项目划分为多个子模块，每个子模块都有自己的 CMakeLists.txt 文件。这使得项目结构更清晰，便于管理和维护。&lt;/li&gt;
+&lt;li&gt;例如，一个大型项目可以分为多个功能模块，每个模块独立构建，最后整合到主项目中。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;复用构建逻辑&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;子目录的 CMakeLists.txt 文件可以复用公共的构建逻辑（如编译选项、宏定义等），减少重复配置。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;简化主 CMakeLists.txt&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;主 CMakeLists.txt 文件只需关注项目的整体结构和依赖关系，具体的构建细节由子目录的 CMakeLists.txt 文件处理，使主文件更简洁。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;支持多语言和多平台&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;每个子模块可以根据需要配置不同的语言和平台特定的构建选项，增加了项目的灵活性。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;代码文件&#34;&gt;代码文件
+&lt;/h4&gt;&lt;p&gt;目录结构&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;├── animal
+│   ├── CMakeLists.txt
+│   ├── cat.cpp
+│   ├── cat.h
+│   ├── dog.cpp
+│   └── dog.h
+├── CMakeLists.txt
+└── main.cpp
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;CMakeLists.txt:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cmake_minimum_required(VERSION 3.20)
+project(Animal CXX)
+
+add_subdirectory(animal)
+
+add_executable(Animal main.cpp)
+
+#链接AnimalLib库
+target_link_libraries(Animal PUBLIC AnimalLib)
+
+#PROJECT_BINARY_DIR:build文件夹（构建生成文件的文件夹）     PROJECT_SOURCE_DIR:当前主目录； /animal：CMakeLists文件在/animal下
+target_include_directories(Animal PUBLIC &amp;#34;${PROJECT_BINARY_DIR}&amp;#34; &amp;#34;${PROJECT_SOURCE_DIR}/animal&amp;#34;)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;animal/CMakeLists.txt:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#添加一个库
+add_library(AnimalLib cat.cpp dog.cpp)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;main中稍作修改：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;可以将
+#include &amp;#34;animal/dog.h&amp;#34;
+#include &amp;#34;animal/cat.h&amp;#34;
+
+修改为：
+#include &amp;#34;dog.h&amp;#34;
+#include &amp;#34;cat.h&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;执行&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;rm -rf build
+
+cmake -B build 
+
+cmake --build build
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&amp;#43;&amp;#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250517202644763.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250517202644763&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;34-object-library-相当于33-的进一步解耦合&#34;&gt;3.4 Object Library (相当于3.3 的进一步“解耦合”)
+&lt;/h3&gt;&lt;p&gt;修改&lt;/p&gt;
+&lt;p&gt;./animal/CmakeLists.txt:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;add_library(AnimalLib OBJECT cat.cpp dog.cpp)
+target_include_directories(AnimalLib PUBLIC .)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;./CmakeLists.txt:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cmake_minimum_required(VERSION 3.20)
+project(Animal CXX)
+
+add_subdirectory(animal)
+
+add_executable(Animal main.cpp)
+
+#链接AnimalLib库
+target_link_libraries(Animal PUBLIC AnimalLib)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;执行：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;rm -rf build
+
+cmake -B build 
+
+cmake --build build
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&amp;#43;&amp;#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250517202427286.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;image-20250517202427286&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;35-cmakelists嵌套-与-object-library的区别&#34;&gt;3.5 CMakeLists嵌套 与 Object library的区别
+&lt;/h3&gt;&lt;h4 id=&#34;351-关键区别分析&#34;&gt;3.5.1 关键区别分析
+&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;库类型不同&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;第一种方法&lt;/strong&gt;：&lt;code&gt;AnimalLib&lt;/code&gt; 是一个静态库（&lt;code&gt;STATIC&lt;/code&gt;），默认情况下 &lt;code&gt;add_library&lt;/code&gt; 创建的是静态库。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;第二种方法&lt;/strong&gt;：&lt;code&gt;AnimalLib&lt;/code&gt; 是一个对象库（&lt;code&gt;OBJECT&lt;/code&gt;）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;包含目录设置位置&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;第一种方法&lt;/strong&gt;：在主目录的 &lt;code&gt;CMakeLists.txt&lt;/code&gt; 中设置包含目录，确保 &lt;code&gt;main.cpp&lt;/code&gt; 可以找到 &lt;code&gt;animal&lt;/code&gt; 子目录中的头文件。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;第二种方法&lt;/strong&gt;：在子目录的 &lt;code&gt;CMakeLists.txt&lt;/code&gt; 中设置包含目录，并通过 &lt;code&gt;PUBLIC&lt;/code&gt; 传播到依赖 &lt;code&gt;AnimalLib&lt;/code&gt; 的目标。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;构建日志差异&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;第一种方法&lt;/strong&gt;：构建日志中会显示静态库的链接步骤：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[ 60%] Linking CXX static library libAnimalLib.a
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;第二种方法&lt;/strong&gt;：构建日志中不会显示静态库的链接步骤，因为对象库不会生成独立的静态库文件。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;352-为什么第二种方法输出少了一句&#34;&gt;3.5.2 为什么第二种方法输出少了一句
+&lt;/h4&gt;&lt;p&gt;在第二种方法中，&lt;code&gt;AnimalLib&lt;/code&gt; 是一个对象库，对象库不会生成独立的静态库文件，而是直接将编译后的对象文件（&lt;code&gt;.o&lt;/code&gt; 文件）提供给依赖它的目标（如 &lt;code&gt;Animal&lt;/code&gt; 可执行文件）。因此，构建日志中不会显示静态库的链接步骤。&lt;/p&gt;
+&lt;h4 id=&#34;353-两种方法的便利之处&#34;&gt;3.5.3 两种方法的便利之处
+&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;第一种方法（静态库）&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;优势&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;静态库可以独立于可执行文件进行构建和链接，便于复用。&lt;/li&gt;
+&lt;li&gt;构建日志更详细，便于调试和验证每个阶段的构建结果。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;适用场景&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;当需要将库作为独立组件复用时。&lt;/li&gt;
+&lt;li&gt;当需要明确管理库的生成和链接步骤时。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;第二种方法（对象库）&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;优势&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;对象库允许直接复用对象文件，避免重复编译，提高构建效率。&lt;/li&gt;
+&lt;li&gt;构建日志更简洁，减少冗余信息。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;适用场景&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;当需要在多个目标之间共享相同的源文件编译结果时。&lt;/li&gt;
+&lt;li&gt;当希望减少构建时间和日志输出时。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;354-总结&#34;&gt;3.5.4 总结
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;第一种方法&lt;/strong&gt;：适合需要明确管理静态库的生成和链接步骤的场景，构建日志更详细。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;第二种方法&lt;/strong&gt;：适合需要复用对象文件以提高构建效率的场景，构建日志更简洁。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;四动态库静态库&#34;&gt;四、动态库、静态库
+&lt;/h2&gt;&lt;h2 id=&#34;五cmake与源文件交互&#34;&gt;五、cmake与源文件交互
+&lt;/h2&gt;&lt;h2 id=&#34;六条件编译&#34;&gt;六、条件编译
+&lt;/h2&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

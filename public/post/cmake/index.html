@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="使用Cmake构建项目 一、CMake构建项目 CMake是什么？ 1. 构建流程 预处理（-E参数 宏替换） 编译 gcc/msvc/clang （-S 参数） 汇编（-C参数 linux生成.o文件、windows生成.obj文件） 连接（将多个二进制文件连接生成一个可执行文件） 2. windows下使用cmake构建项目 2.1 下载cmake 官网下载Download CMake 下载msi文件即可 2.2 创建项目 使用工具：vscode 新建一个文件夹，在其中新建一个.cpp的项目文件 以及 一个 CMakeLists.txt的文件 在CamkeList.txt中写入以下代码（将注释去掉） #这一行指定了 CMake 的最低版本要求。这意味着你需要安装 CMake 3.20 或更高版本才能正确解析这个文件\rcmake_minimum_required(VERSION 3.20)\r#项目名称\rproject(Hello)\r#这一行告诉 CMake 创建一个可执行文件（Hello），并指定 hello.cpp 是构建这个可执行文件所需的源文件\radd_executable(Hello hello.cpp) 示例代码hello.cpp: #include&lt;iostream&gt; using namespace std; int main(int argc, char const *argv[]) { cout&lt;&lt; &#34;Hello&#34;&lt;&lt; endl; return 0; } 2.3 编译 (1)使用默认编译器 命令行中输入： #默认使用msvc进行编译 cmake -B build cmake --build build 编译之后的项目文件目录\r.">
+<title>CMake构建项目</title>
+
+<link rel='canonical' href='http://localhost:1313/post/cmake/'>
+
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="CMake构建项目">
+<meta property='og:description' content="使用Cmake构建项目 一、CMake构建项目 CMake是什么？ 1. 构建流程 预处理（-E参数 宏替换） 编译 gcc/msvc/clang （-S 参数） 汇编（-C参数 linux生成.o文件、windows生成.obj文件） 连接（将多个二进制文件连接生成一个可执行文件） 2. windows下使用cmake构建项目 2.1 下载cmake 官网下载Download CMake 下载msi文件即可 2.2 创建项目 使用工具：vscode 新建一个文件夹，在其中新建一个.cpp的项目文件 以及 一个 CMakeLists.txt的文件 在CamkeList.txt中写入以下代码（将注释去掉） #这一行指定了 CMake 的最低版本要求。这意味着你需要安装 CMake 3.20 或更高版本才能正确解析这个文件\rcmake_minimum_required(VERSION 3.20)\r#项目名称\rproject(Hello)\r#这一行告诉 CMake 创建一个可执行文件（Hello），并指定 hello.cpp 是构建这个可执行文件所需的源文件\radd_executable(Hello hello.cpp) 示例代码hello.cpp: #include&lt;iostream&gt; using namespace std; int main(int argc, char const *argv[]) { cout&lt;&lt; &#34;Hello&#34;&lt;&lt; endl; return 0; } 2.3 编译 (1)使用默认编译器 命令行中输入： #默认使用msvc进行编译 cmake -B build cmake --build build 编译之后的项目文件目录\r.">
+<meta property='og:url' content='http://localhost:1313/post/cmake/'>
+<meta property='og:site_name' content='My New Hugo Site'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-05-18T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-05-18T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="CMake构建项目">
+<meta name="twitter:description" content="使用Cmake构建项目 一、CMake构建项目 CMake是什么？ 1. 构建流程 预处理（-E参数 宏替换） 编译 gcc/msvc/clang （-S 参数） 汇编（-C参数 linux生成.o文件、windows生成.obj文件） 连接（将多个二进制文件连接生成一个可执行文件） 2. windows下使用cmake构建项目 2.1 下载cmake 官网下载Download CMake 下载msi文件即可 2.2 创建项目 使用工具：vscode 新建一个文件夹，在其中新建一个.cpp的项目文件 以及 一个 CMakeLists.txt的文件 在CamkeList.txt中写入以下代码（将注释去掉） #这一行指定了 CMake 的最低版本要求。这意味着你需要安装 CMake 3.20 或更高版本才能正确解析这个文件\rcmake_minimum_required(VERSION 3.20)\r#项目名称\rproject(Hello)\r#这一行告诉 CMake 创建一个可执行文件（Hello），并指定 hello.cpp 是构建这个可执行文件所需的源文件\radd_executable(Hello hello.cpp) 示例代码hello.cpp: #include&lt;iostream&gt; using namespace std; int main(int argc, char const *argv[]) { cout&lt;&lt; &#34;Hello&#34;&lt;&lt; endl; return 0; } 2.3 编译 (1)使用默认编译器 命令行中输入： #默认使用msvc进行编译 cmake -B build cmake --build build 编译之后的项目文件目录\r.">
+  
+
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column compact"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_huda2458f72ce188392d75c5d51cd8e24e_373_300x0_resize_box_3.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">My New Hugo Site</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu" id="main-menu">
+        
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/cmake/">CMake构建项目</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 18, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    6 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="使用cmake构建项目">使用Cmake构建项目
+</h1><h2 id="一cmake构建项目">一、CMake构建项目
+</h2><h3 id="cmake是什么">CMake是什么？
+</h3><h4 id="heading">
+</h4><h3 id="1-构建流程">1. 构建流程
+</h3><ol>
+<li>预处理（-E参数  宏替换）</li>
+<li>编译 gcc/msvc/clang （-S 参数）</li>
+<li>汇编（-C参数  linux生成.o文件、windows生成.obj文件）</li>
+<li>连接（将多个二进制文件连接生成一个可执行文件）</li>
+</ol>
+<h3 id="2-windows下使用cmake构建项目">2. windows下使用cmake构建项目
+</h3><h4 id="21-下载cmake">2.1 下载cmake
+</h4><p>官网下载<a class="link" href="https://cmake.org/download/"  target="_blank" rel="noopener"
+    >Download CMake</a></p>
+<p>下载msi文件即可</p>
+<p><img src="E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&#43;&#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250506204144066.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250506204144066"
+	
+	
+></p>
+<h4 id="22-创建项目">2.2 创建项目
+</h4><p>使用工具：vscode</p>
+<p>新建一个文件夹，在其中新建一个.cpp的项目文件  以及  一个 CMakeLists.txt的文件</p>
+<p>在CamkeList.txt中写入以下代码（将注释去掉）</p>
+<pre tabindex="0"><code>#这一行指定了 CMake 的最低版本要求。这意味着你需要安装 CMake 3.20 或更高版本才能正确解析这个文件
+cmake_minimum_required(VERSION 3.20)
+#项目名称
+project(Hello)
+#这一行告诉 CMake 创建一个可执行文件（Hello），并指定 hello.cpp 是构建这个可执行文件所需的源文件
+add_executable(Hello hello.cpp)
+</code></pre><p>示例代码hello.cpp:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#75715e">#include&lt;iostream&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">*</span>argv[])
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    cout<span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Hello&#34;</span><span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="23-编译">2.3 编译
+</h4><h5 id="1使用默认编译器">(1)使用默认编译器
+</h5><p>命令行中输入：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#默认使用msvc进行编译</span>
+</span></span><span style="display:flex;"><span>cmake -B build
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cmake --build build
+</span></span></code></pre></div><p><img src="E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&#43;&#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250506202446333.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250506202446333"
+	
+	
+></p>
+<pre tabindex="0"><code>编译之后的项目文件目录
+.\Hello\
+├── CMakeLists.txt
+├── hello.cpp
+└── build\
+</code></pre><p>运行程序</p>
+<pre tabindex="0"><code>build/Debug/hello.exe
+</code></pre><p><img src="E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&#43;&#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250506203320184.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250506203320184"
+	
+	
+></p>
+<h5 id="2使用mingw-makefiles编译器">（2）使用&quot;MinGW Makefiles&quot;编译器
+</h5><p>使用以下命令来查看你可用编译器</p>
+<p>*在开头的是默认编译器</p>
+<pre tabindex="0"><code>cmake --help
+</code></pre><p><img src="E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&#43;&#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250506203426221.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250506203426221"
+	
+	
+></p>
+<p>现在我们指定“MinGW Makefiles”编译器来编译（注意是用“”  不是**）</p>
+<pre tabindex="0"><code>cmake -B build -G &#34;MinGW Makefiles&#34;
+cmake --build build
+</code></pre><p>执行命令遇到：</p>
+<p><img src="E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&#43;&#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250506203655220.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250506203655220"
+	
+	
+></p>
+<p>是因为之前已经使用默认编译器编译过了，已经有了一个build的文件夹，可以将之前的build文件夹重新命名一个其他名字，再进行尝试。</p>
+<pre tabindex="0"><code>#启动！
+.\build\hello.exe
+</code></pre><p><img src="E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&#43;&#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250506203816200.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250506203816200"
+	
+	
+></p>
+<h3 id="3-linux下使用cmake">3. Linux下使用cmake
+</h3><h4 id="31-安装cmake">3.1. 安装cmake
+</h4><h5 id="apt安装">apt安装
+</h5><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt-get install cmake
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#查看安装版本</span>
+</span></span><span style="display:flex;"><span>cmake --version
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#查看编译器</span>
+</span></span><span style="display:flex;"><span>cmake --help
+</span></span></code></pre></div><p><img src="E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&#43;&#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250506210627123.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250506210627123"
+	
+	
+></p>
+<h4 id="32-编译项目linux下使用默认编译器即可">3.2 编译项目（Linux下使用默认编译器即可）
+</h4><p>项目文件与windows下的文件一样即可</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cmake -B build
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cmake --build build
+</span></span></code></pre></div><p><img src="E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&#43;&#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250506210830669.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250506210830669"
+	
+	
+></p>
+<p>执行程序</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>build/Hello
+</span></span></code></pre></div><p><img src="E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&#43;&#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250506211204551.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250506211204551"
+	
+	
+></p>
+<h2 id="二cmake语法">二、CMake语法
+</h2><h3 id="1-message--打印">1. message:  打印
+</h3><pre tabindex="0"><code>cmake_grammar/
+└── first.cmake
+</code></pre><p>first.cmake:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cmake" data-lang="cmake"><span style="display:flex;"><span>cmake_minimum_required(<span style="color:#e6db74">VERSION</span> <span style="color:#e6db74">3.20</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>message(<span style="color:#e6db74">&#34;Hello&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>message(<span style="color:#e6db74">&#34;--------------&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>message(<span style="color:#e6db74">Hello</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>message(<span style="color:#e6db74">&#34;--------------&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>message(<span style="color:#e6db74">&#34;jfalk
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">jalsdkf&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>message(<span style="color:#e6db74">&#34;--------------&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>message(<span style="color:#e6db74">[[asdfa</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">asdfef]]</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>message(<span style="color:#e6db74">&#34;--------------&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#获取CMAKE中的信息
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#  ${}
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>message(<span style="color:#f92672">${</span>CMAKE_VERSION<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><p>执行命令</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>camke -P first.cmake
+</span></span></code></pre></div><p><img src="E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&#43;&#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250513230839584.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250513230839584"
+	
+	
+></p>
+<h3 id="2-变量操作--setlist">2. 变量操作  set、list
+</h3><h4 id="21-set">2.1 set
+</h4><pre tabindex="0"><code>./../cmake_grammar/
+├── first.cmake
+└── set.cmake
+</code></pre><p>set.cmake:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cmake" data-lang="cmake"><span style="display:flex;"><span>cmake_minimum_required(<span style="color:#e6db74">VERSION</span> <span style="color:#e6db74">3.20</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#set用法
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>set(<span style="color:#e6db74">Var1</span> <span style="color:#e6db74">ASF</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>message(<span style="color:#f92672">${</span>Var1<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>set(<span style="color:#e6db74">&#34;My Var&#34;</span> <span style="color:#e6db74">myvar</span><span style="color:#e6db74">&#34;&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>message(<span style="color:#f92672">${</span>My\ Var<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>set(<span style="color:#e6db74">[[My</span> <span style="color:#e6db74">Var]]</span> <span style="color:#e6db74">myvar[]</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>message(<span style="color:#f92672">${</span>My\ Var<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#设置多个值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>set(<span style="color:#e6db74">serval_Var1</span> <span style="color:#e6db74">a1</span> <span style="color:#e6db74">a2</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>message(<span style="color:#f92672">${</span>serval_Var1<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>set(<span style="color:#e6db74">serval_var2</span> <span style="color:#e6db74">b1;b2</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>message(<span style="color:#f92672">${</span>serval_var2<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># $PATH
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>message(<span style="color:#f92672">$ENV{</span>PATH<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#用于将环境变量CXX的值改为“g++”
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>set(<span style="color:#e6db74">ENV{CXX}</span> <span style="color:#e6db74">&#34;g++&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>message(<span style="color:#f92672">$ENV{</span>CXX<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#取消设置环境变量 CXX  将 CXX 的值恢复到执行本代码前的的CXX值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>unset(<span style="color:#e6db74">ENV{CXX}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>message(<span style="color:#f92672">$ENV{</span>CXX<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><p>执行命令：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cmake -P set.cmake
+</span></span></code></pre></div><p><img src="E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&#43;&#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250513232701771.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250513232701771"
+	
+	
+></p>
+<p>表示已经取消了CXX的值，所以此处再进行打印就会报错</p>
+<p><img src="E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&#43;&#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250513233502956.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250513233502956"
+	
+	
+></p>
+<h4 id="22-list">2.2 list
+</h4><pre tabindex="0"><code>./../cmake_grammar/
+├── first.cmake
+└── set.cmake
+└── list.cmake
+</code></pre><p>！注意cmake中的空格</p>
+<p>list.cmake:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cmake" data-lang="cmake"><span style="display:flex;"><span>cmake_minimum_required(<span style="color:#e6db74">VERSION</span> <span style="color:#e6db74">3.20</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#set与list都可以创建变量
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>message(<span style="color:#e6db74">=========创建变量============</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>set(<span style="color:#e6db74">Var_set</span> <span style="color:#e6db74">set</span> <span style="color:#e6db74">s1</span> <span style="color:#e6db74">s2</span> <span style="color:#e6db74">s3</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>message(<span style="color:#f92672">${</span>Var_set<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>list(<span style="color:#e6db74">APPEND</span> <span style="color:#e6db74">Var_list</span> <span style="color:#e6db74">list</span> <span style="color:#e6db74">l1</span> <span style="color:#e6db74">l2</span> <span style="color:#e6db74">l3</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>message(<span style="color:#f92672">${</span>Var_list<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#获取长度
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>message(<span style="color:#e6db74">=========获取长度============</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>list(<span style="color:#e6db74">LENGTH</span> <span style="color:#e6db74">Var_set</span> <span style="color:#e6db74">len</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>message(<span style="color:#f92672">${</span>len<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#找到Var_set中s2这个元素所在的索引  索引是从1开始的
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>message(<span style="color:#e6db74">=========获取索引============</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>list(<span style="color:#e6db74">FIND</span> <span style="color:#e6db74">Var_set</span> <span style="color:#e6db74">s2</span> <span style="color:#e6db74">index</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>message(<span style="color:#f92672">${</span>index<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#移除变量中的元素
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>message(<span style="color:#e6db74">=========移除元素============</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>list(<span style="color:#e6db74">REMOVE_ITEM</span> <span style="color:#e6db74">Var_set</span> <span style="color:#e6db74">s2</span>) <span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>message(<span style="color:#f92672">${</span>Var_set<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#添加元素
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>message(<span style="color:#e6db74">=========添加元素============</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>list(<span style="color:#e6db74">APPEND</span> <span style="color:#e6db74">Var_set</span> <span style="color:#e6db74">a4</span>)  <span style="color:#75715e"># 直接尾插
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>message(<span style="color:#f92672">${</span>Var_set<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>list(<span style="color:#e6db74">INSERT</span> <span style="color:#e6db74">Var_set</span> <span style="color:#e6db74">3</span> <span style="color:#e6db74">a5</span>) <span style="color:#75715e"># 指定要插入的位置
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>message(<span style="color:#f92672">${</span>Var_set<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e">#反转、排序
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>message(<span style="color:#e6db74">=========反转、排序============</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>list(<span style="color:#e6db74">REVERSE</span> <span style="color:#e6db74">Var_set</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>message(<span style="color:#f92672">${</span>Var_set<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>list(<span style="color:#e6db74">SORT</span> <span style="color:#e6db74">Var_set</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>message(<span style="color:#f92672">${</span>Var_set<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><p>执行命令：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cmake -P list.cmake
+</span></span></code></pre></div><p><img src="E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&#43;&#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250513235244159.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250513235244159"
+	
+	
+></p>
+<h3 id="3-流程控制">3. 流程控制
+</h3><h4 id="31-条件流程控制if">3.1 条件流程控制（if）
+</h4><pre tabindex="0"><code>./../cmake_grammar/
+├── first.cmake
+└── set.cmake
+└── list.cmake
+└── if.cmake
+</code></pre><p>if.cmake:</p>
+<pre tabindex="0"><code>cmake_minimum_required(VERSION 3.20)
+
+set(FLAG TRUE)
+
+if(FLAG)
+    message(&#34;TRUE&#34;)
+elseif(FLAG OR NOT FLAG)
+    message(&#34;FLAG OR NOT FLAG&#34;)
+elseif(FLAG AND NOT FLAG)
+    message(&#34;FLAG AND NOT FLAG&#34;)
+endif()
+
+message(&#34;==============================&#34;)
+if(1 LESS 2)
+    message(&#34;1 LESS 2&#34;)
+endif()
+
+if(NOT 2 LESS 1)
+    message(&#34;NOT 2 LESS 1&#34;)
+endif()
+
+message(&#34;==============================&#34;)
+if(1 EQUAL &#34;1&#34;)
+    message(&#34;1 EQUAL &#39;1&#39;&#34;)
+endif()
+
+message(&#34;==============================&#34;)
+if(NOT &#34;a&#34; LESS 233)
+    message(&#34;a LESS 233&#34;)
+endif()
+</code></pre><p>执行命令：</p>
+<pre tabindex="0"><code>cmake -P if.make
+</code></pre><p><img src="E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&#43;&#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250516223621266.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250516223621266"
+	
+	
+></p>
+<h4 id="32-循环流程控制forwhile">3.2 循环流程控制（for、while）
+</h4><pre tabindex="0"><code>./../cmake_grammar/
+├── first.cmake
+└── set.cmake
+└── list.cmake
+└── if.cmake
+└── Loop.cmake
+</code></pre><p>Loop.cmake:</p>
+<pre tabindex="0"><code>cmake_minimum_required(VERSION 3.20)
+
+foreach(VAR RANGE 3)
+    message(${VAR})
+endforeach(VAR RANGE 3)
+message(&#34;===============================&#34;)
+
+set(MY_LISTS 1 2 3)
+foreach(VAR IN LISTS MY_LISTS)
+    message(${VAR})    
+endforeach()
+message(&#34;===============================&#34;)
+
+#项目中用的较多
+set(LIST 2 3)
+foreach(VAR IN LISTS LIST ITEMS a b 5)
+    message(${VAR})    
+endforeach()
+message(&#34;===============================&#34;)
+
+#zip
+set(L1 one two three)
+set(L2 1 2 3)
+foreach(num IN ZIP_LISTS L1 L2)
+    message(&#34;word=${num_0},num=${num_1}&#34;)    
+endforeach()
+</code></pre><p>执行命令：</p>
+<pre tabindex="0"><code>cmake -P Loop.cmake
+</code></pre><p><img src="E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&#43;&#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250516224617346.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250516224617346"
+	
+	
+></p>
+<h3 id="4-函数">4. 函数
+</h3><pre tabindex="0"><code>./../cmake_grammar/
+├── first.cmake
+└── set.cmake
+└── list.cmake
+└── if.cmake
+└── Loop.cmake
+└── func.cmake
+</code></pre><p>func.cmake:</p>
+<pre tabindex="0"><code>cmake_minimum_required(VERSION 3.20)
+
+function(MyFunc FirstArg)
+    #当前的函数名
+    message(&#34;MyFunc Name: ${CMAKE_CURRENT_FUNCTION}&#34;)
+    #传入的参数
+    message(&#34;FirstArg ${FirstArg}&#34;)
+    set(FirstArg &#34;new_value&#34;)
+    message(&#34;FirstArg again ${FirstArg}&#34;)
+    #打印参数
+    message(&#34;ARGV0 ${ARGV0}&#34;)
+    message(&#34;ARGV1 ${ARGV1}&#34;)
+    message(&#34;ARGV2 ${ARGV2}&#34;)
+endfunction(MyFunc FirstArg)
+
+
+set(FirstArg &#34;first value&#34;)
+MyFunc(${FirstArg} &#34;second_value&#34;)   #传入参数时，要使用${} 不能直接写变量名
+message(&#34;MainFunc FirstArg: ${FirstArg}&#34;)
+</code></pre><p>执行命令：</p>
+<pre tabindex="0"><code>cmake -P func.cmake
+</code></pre><p><img src="E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&#43;&#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250516225748876.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250516225748876"
+	
+	
+></p>
+<h3 id="5-作用域">5. 作用域
+</h3><p>新建一个项目文件夹</p>
+<p>这只是在CMakeLists.txt中练习cmake的语法，是没有链接可执行文件的</p>
+<pre tabindex="0"><code>./../cmake_grammar/
+├──test_project
+└──其他文件
+
+./../cmake_grammar/test_project/
+├──CMakeLists.txt
+</code></pre><p>CMakeLists.txt:</p>
+<pre tabindex="0"><code>cmake_minimum_required(VERSION 3.20)
+project(scope)
+
+function(OutFunc)
+    message(&#34;-&gt; OutFunc: ${Var}&#34;)
+    set(Var 2)
+    InFunc()
+    message(&#34;&lt;- OutFunc: ${Var}&#34;)
+endfunction(OutFunc)
+
+function(InFunc)
+    message(&#34;-&gt;InFunc: ${Var}&#34;)
+    set(Var 3)
+    message(&#34;&lt;- InFunc: ${Var}&#34;)    
+endfunction(InFunc)
+
+#相当于全局变量
+set(Var 1)
+message(&#34;-&gt; Global: ${Var}&#34;)
+OutFunc()
+message(&#34;&lt;- Global: ${Var}&#34;)
+</code></pre><p>执行命令：</p>
+<pre tabindex="0"><code>cmake -B build
+</code></pre><p><img src="E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&#43;&#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250516232447857.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250516232447857"
+	
+	
+></p>
+<h3 id="6-宏">6. 宏
+</h3><p>注意：尽量不要写宏，只要会读</p>
+<p>宏：作用域比函数更大，在宏内部进行修改时，外部（调用宏的作用域）的变量也会受到改变</p>
+<p>函数：在函数内部修改变量时，不会影响到外部的变量</p>
+<h4 id="61代码实现">6.1代码实现
+</h4><pre tabindex="0"><code>~/share/C++project/cmake_learn/cmake_grammar$ tree -L 1
+.
+├── first.cmake
+├── func.cmake
+├── if.cmake
+├── list.cmake
+├── Loop.cmake
+├── macro.cmake
+├── set.cmake
+└── test_project
+</code></pre><p>macro.cmake :</p>
+<pre tabindex="0"><code>cmake_minimum_required(VERSION 3.20)
+
+macro(Test myVar)
+    set(myVar &#34;new_value&#34;)   #创建了一个新的变量
+    message(&#34;macro: ${myVar}&#34;)
+endmacro()
+
+set(myVar &#34;First_value&#34;)
+message(&#34;First: ${myVar}&#34;)
+
+Test(${myVar})
+message(&#34;final: ${myVar}&#34;)
+</code></pre><p>执行命令：</p>
+<pre tabindex="0"><code>cmake -P macro.cmake
+</code></pre><p><img src="E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&#43;&#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250516235154733.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250516235154733"
+	
+	
+></p>
+<p>=============================================</p>
+<h4 id="62-ai代码分析">6.2 AI代码分析
+</h4><hr>
+<p>（1）定义宏 <code>Test</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cmake" data-lang="cmake"><span style="display:flex;"><span>macro(<span style="color:#e6db74">Test</span> <span style="color:#e6db74">myVar</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    set(<span style="color:#e6db74">myVar</span> <span style="color:#e6db74">&#34;new_value&#34;</span>)   <span style="color:#75715e"># 创建了一个新的变量
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    message(<span style="color:#e6db74">&#34;macro: ${myVar}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>endmacro(<span style="color:#e6db74">Test</span> <span style="color:#e6db74">myVar</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><ul>
+<li><code>macro(Test myVar)</code> 定义了一个名为 <code>Test</code> 的宏，它接受一个参数 <code>myVar</code>。</li>
+<li>在宏内部：
+<ul>
+<li><code>set(myVar &quot;new_value&quot;)</code> 尝试将参数 <code>myVar</code> 设置为 <code>&quot;new_value&quot;</code>。</li>
+<li><code>message(&quot;macro: ${myVar}&quot;)</code> 输出宏内部的变量值。</li>
+</ul>
+</li>
+</ul>
+<p>(2) 设置全局变量 <code>myVar</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cmake" data-lang="cmake"><span style="display:flex;"><span>set(<span style="color:#e6db74">myVar</span> <span style="color:#e6db74">&#34;First_value&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>message(<span style="color:#e6db74">&#34;First: ${myVar}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><ul>
+<li><code>set(myVar &quot;First_value&quot;)</code> 将全局变量 <code>myVar</code> 设置为 <code>&quot;First_value&quot;</code>。</li>
+<li><code>message(&quot;First: ${myVar}&quot;)</code> 输出当前的 <code>myVar</code> 值：
+<pre tabindex="0"><code>First: First_value
+</code></pre></li>
+</ul>
+<p>(3) 调用宏 <code>Test</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cmake" data-lang="cmake"><span style="display:flex;"><span>Test(<span style="color:#f92672">${</span>myVar<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><ul>
+<li>调用宏 <code>Test</code>，并传递 <code>${myVar}</code> 作为参数。此时，<code>${myVar}</code> 的值是 <code>&quot;First_value&quot;</code>。</li>
+</ul>
+<hr>
+<ul>
+<li>
+<ul>
+<li>关键点：宏的参数传递和作用域</li>
+</ul>
+</li>
+</ul>
+<p>在 CMake 中，宏的参数是通过 <strong>文本替换</strong> 来传递的。也就是说，当你调用 <code>Test(${myVar})</code> 时，宏内部的代码会被展开为：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cmake" data-lang="cmake"><span style="display:flex;"><span>set(<span style="color:#e6db74">First_value</span> <span style="color:#e6db74">&#34;new_value&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>message(<span style="color:#e6db74">&#34;macro: ${First_value}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><ul>
+<li><code>set(First_value &quot;new_value&quot;)</code> 尝试将变量 <code>First_value</code> 设置为 <code>&quot;new_value&quot;</code>，但 <code>First_value</code> 并不是一个有效的变量名，因此这行代码不会对任何变量产生实际影响。</li>
+<li><code>message(&quot;macro: ${First_value}&quot;)</code> 输出宏内部的变量值，但由于 <code>First_value</code> 并没有被设置，它仍然是 <code>&quot;First_value&quot;</code>。</li>
+</ul>
+<p>===================================输出结果===================================</p>
+<p>因此，最终的输出是：</p>
+<pre tabindex="0"><code>First: First_value
+macro: First_value
+final: new_value
+</code></pre><p>===================================为什么 <code>final: new_value</code>？===================================</p>
+<p>这里的关键在于 CMake 的变量作用域和宏的特性。在宏内部，<code>set(myVar &quot;new_value&quot;)</code> 实际上修改了调用宏的作用域中的变量 <code>myVar</code>。由于宏的作用域特性，宏内部对变量的修改会直接影响调用宏的作用域。</p>
+<p>在你的代码中，<code>Test(${myVar})</code> 调用了宏 <code>Test</code>，并将 <code>${myVar}</code> 的值 <code>&quot;First_value&quot;</code> 传递给宏。宏内部的 <code>set(myVar &quot;new_value&quot;)</code> 实际上修改了全局变量 <code>myVar</code>，因为宏的作用域特性使得宏内部的变量修改会反映到调用宏的作用域中。</p>
+<p>===================================总结===================================</p>
+<ul>
+<li><strong>宏的作用域特性</strong>：宏内部对变量的修改会直接影响调用宏的作用域。</li>
+<li><strong>参数传递</strong>：宏的参数是通过文本替换传递的，因此宏内部对参数的修改会直接影响调用宏的作用域中的变量。</li>
+</ul>
+<p>===================================修改后的代码===================================</p>
+<p>如果你希望避免这种行为，可以使用 <code>function</code> 替代 <code>macro</code>，因为 <code>function</code> 的参数是通过值传递的，不会影响外部变量。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cmake" data-lang="cmake"><span style="display:flex;"><span>cmake_minimum_required(<span style="color:#e6db74">VERSION</span> <span style="color:#e6db74">3.20</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>function(<span style="color:#e6db74">Test</span> <span style="color:#e6db74">myVar</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    set(<span style="color:#e6db74">myVar</span> <span style="color:#e6db74">&#34;new_value&#34;</span> <span style="color:#e6db74">PARENT_SCOPE</span>)  <span style="color:#75715e"># 使用 PARENT_SCOPE 修改外部变量
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    message(<span style="color:#e6db74">&#34;function: ${myVar}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>endfunction(<span style="color:#e6db74">Test</span> <span style="color:#e6db74">myVar</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>set(<span style="color:#e6db74">myVar</span> <span style="color:#e6db74">&#34;First_value&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>message(<span style="color:#e6db74">&#34;First: ${myVar}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>Test(<span style="color:#e6db74">myVar</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>message(<span style="color:#e6db74">&#34;final: ${myVar}&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><p>这样，输出将是：</p>
+<pre tabindex="0"><code>First: First_value
+function: new_value
+final: new_value
+</code></pre><h4 id="63-与c宏的区别">6.3 与C++宏的区别
+</h4><div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>C++ 宏</th>
+<th>CMake 宏</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>定义方式</strong></td>
+<td><code>#define</code></td>
+<td><code>macro</code></td>
+</tr>
+<tr>
+<td><strong>作用域</strong></td>
+<td>全局，文件范围内有效</td>
+<td>调用宏的作用域，参数通过文本替换传递</td>
+</tr>
+<tr>
+<td><strong>用途</strong></td>
+<td>简化代码、条件编译、调试辅助</td>
+<td>代码复用、简化 CMake 脚本</td>
+</tr>
+<tr>
+<td><strong>类型检查</strong></td>
+<td>没有，纯文本替换</td>
+<td>有，CMake 语法检查</td>
+</tr>
+<tr>
+<td><strong>调试难度</strong></td>
+<td>难，预处理后代码可能难以理解</td>
+<td>较容易，CMake 提供错误信息</td>
+</tr>
+</tbody>
+</table></div>
+<p>==========================================================================</p>
+<h2 id="三构建项目的四种方式">三、构建项目的四种方式
+</h2><h3 id="31-直接写入源码的方式">3.1 直接写入源码的方式
+</h3><p>主要关注：CMakeLists.txt</p>
+<p>目录结构</p>
+<pre tabindex="0"><code># tree -L 2
+.
+├── animal
+│   ├── dog.cpp
+│   └── dog.h
+├── CMakeLists.txt
+└── main.cpp
+</code></pre><p>main.cpp</p>
+<pre tabindex="0"><code>#include &lt;iostream&gt;
+#include &#34;animal/dog.h&#34;
+
+using namespace std;
+
+int main(int argc, char const *argv[])
+{
+    /* code */
+    Dog wangcai;
+    string bark= wangcai.barking();
+    cout&lt;&lt;bark&lt;&lt;endl;
+    return 0;
+}
+</code></pre><p>dog.cpp</p>
+<pre tabindex="0"><code>#include &#34;dog.h&#34;
+
+std::string Dog::barking(){
+    return &#34;fuck&#34;;
+}
+</code></pre><p>dog.h</p>
+<p>#pragma once：确保头文件的内容在编译过程中只被包含一次。这可以避免重复定义和重复编译的问题。</p>
+<pre tabindex="0"><code>#pragma once
+
+#include &lt;string&gt;
+
+class Dog
+{
+public:
+    std::string barking();
+};
+</code></pre><p><strong>主要关注</strong>：CMakeLists.txt:</p>
+<pre tabindex="0"><code>cmake_minimum_required(VERSION 3.20)
+project(animal CXX)  #将编译器指定为cpp
+add_executable(animal main.cpp animal/dog.cpp)  #将cpp文件构建为一个名为animal的项目
+</code></pre><p>执行命令：</p>
+<pre tabindex="0"><code>#创建构建目录并生成构建文件（创建一个名为build的目录，并在build中创建生成文件，如Makefile等）
+cmake -B build
+#构建项目（根据指定文件build中的构建文件：Makefile等来编译项目并生成可执行文件）
+cmake --build build 
+#执行
+build/animal
+</code></pre><p><img src="E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&#43;&#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250517190247620.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250517190247620"
+	
+	
+></p>
+<p><img src="E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&#43;&#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250517190218964.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h3 id="32-调用子目录中的cmake脚本">3.2 调用子目录中的cmake脚本
+</h3><p>include方法可以引入子目录中.cmake后缀的配置文件</p>
+<p>添加animal.cmake、cat.cpp、cat.h:</p>
+<p>目录结构</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>├── animal
+</span></span><span style="display:flex;"><span>│   ├── animal.cmake
+</span></span><span style="display:flex;"><span>│   ├── cat.cpp
+</span></span><span style="display:flex;"><span>│   ├── cat.h
+</span></span><span style="display:flex;"><span>│   ├── dog.cpp
+</span></span><span style="display:flex;"><span>│   └── dog.h
+</span></span><span style="display:flex;"><span>├── CMakeLists.txt
+</span></span><span style="display:flex;"><span>└── main.cpp
+</span></span></code></pre></div><p>CMakeLists.txt:</p>
+<p>#注意要使用include引入cmake文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cmake" data-lang="cmake"><span style="display:flex;"><span>cmake_minimum_required(<span style="color:#e6db74">VERSION</span> <span style="color:#e6db74">3.20</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>project(<span style="color:#e6db74">animal</span> <span style="color:#e6db74">CXX</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>include(<span style="color:#e6db74">animal/animal.cmake</span>)  <span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>add_executable(<span style="color:#e6db74">animal</span> <span style="color:#e6db74">main.cpp</span> <span style="color:#f92672">${</span>animal_source<span style="color:#f92672">}</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><p>animal.cmake</p>
+<p>#注意！！！！</p>
+<p>不可以是  ：   <em>set(animal_source cat.cpp dog.cpp)</em></p>
+<p>其实本质：将<em>animal_source</em>这个变量设置为以下的值。 在CMakeLists.txt中将变量替换为设置的值，所以变量的值要设置为以<em>CMakeLists</em>为主体时，子文件的相对路径</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cmake" data-lang="cmake"><span style="display:flex;"><span>set(<span style="color:#e6db74">animal_source</span> <span style="color:#e6db74">animal/cat.cpp</span> <span style="color:#e6db74">animal/dog.cpp</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><p>cat.h、cat.cpp中随便写一个类，定义类方法。在main.cpp中使用</p>
+<pre tabindex="0"><code>#cat.h:
+#pragma once
+
+#include &lt;string&gt;
+
+class Cat
+{
+public:
+    std::string miaow();
+};
+#-----------------------------------------------
+#cat.cpp:
+#include &#34;cat.h&#34;
+
+std::string Cat::miaow(){
+    return &#34;妙啊妙啊&#34;;
+}
+#-----------------------------------------------
+#main.cpp:
+#include &lt;iostream&gt;
+#include &#34;animal/dog.h&#34;
+#include &#34;animal/cat.h&#34;
+
+using namespace std;
+
+int main(int argc, char const *argv[])
+{
+
+    Dog wangcai;
+    string bark= wangcai.barking();
+    cout&lt;&lt;bark&lt;&lt;endl;
+    Cat duoduo;
+    string mao = duoduo.miaow();
+    cout&lt;&lt;mao&lt;&lt;endl;
+    return 0;
+}
+</code></pre><p>执行命令：</p>
+<pre tabindex="0"><code>rm -rf build
+
+cmake -B build 
+
+cmake --build build
+</code></pre><p><img src="E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&#43;&#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250517192741770.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250517192741770"
+	
+	
+></p>
+<h3 id="33-cmakelists嵌套最常见的一种方式">3.3 CMakeLists嵌套（最常见的一种方式）
+</h3><p>CMakeLists.txt 嵌套是指在项目的主 CMakeLists.txt 文件中使用 <code>add_subdirectory()</code> 命令将子目录的 CMakeLists.txt 文件包含进来，从而构建一个<strong>层次化</strong>的项目结构。</p>
+<pre tabindex="0"><code>project/
+├── CMakeLists.txt          # 主 CMakeLists.txt
+├── src/
+│   ├── CMakeLists.txt      # 源代码模块的 CMakeLists.txt
+│   └── ...                 # 源代码文件
+├── lib/
+│   ├── CMakeLists.txt      # 库模块的 CMakeLists.txt
+│   └── ...                 # 库文件
+└── ...
+</code></pre><h4 id="几个重要的方法">几个重要的方法：
+</h4><ul>
+<li>
+<p>target_include_directories &mdash;头文件目录的声明</p>
+</li>
+<li>
+<p>target_link_libraries  &mdash;  链接库文件</p>
+</li>
+<li>
+<p>add_subdirectory &mdash; 添加子目录</p>
+</li>
+<li>
+<p>add_library  &mdash; 生成库文件（默认  <strong>STATIC library</strong>）</p>
+</li>
+</ul>
+<h4 id="便利">便利：
+</h4><ul>
+<li><strong>模块化项目组织</strong>：
+<ul>
+<li>允许将项目划分为多个子模块，每个子模块都有自己的 CMakeLists.txt 文件。这使得项目结构更清晰，便于管理和维护。</li>
+<li>例如，一个大型项目可以分为多个功能模块，每个模块独立构建，最后整合到主项目中。</li>
+</ul>
+</li>
+<li><strong>复用构建逻辑</strong>：
+<ul>
+<li>子目录的 CMakeLists.txt 文件可以复用公共的构建逻辑（如编译选项、宏定义等），减少重复配置。</li>
+</ul>
+</li>
+<li><strong>简化主 CMakeLists.txt</strong>：
+<ul>
+<li>主 CMakeLists.txt 文件只需关注项目的整体结构和依赖关系，具体的构建细节由子目录的 CMakeLists.txt 文件处理，使主文件更简洁。</li>
+</ul>
+</li>
+<li><strong>支持多语言和多平台</strong>：
+<ul>
+<li>每个子模块可以根据需要配置不同的语言和平台特定的构建选项，增加了项目的灵活性。</li>
+</ul>
+</li>
+</ul>
+<h4 id="代码文件">代码文件
+</h4><p>目录结构</p>
+<pre tabindex="0"><code>├── animal
+│   ├── CMakeLists.txt
+│   ├── cat.cpp
+│   ├── cat.h
+│   ├── dog.cpp
+│   └── dog.h
+├── CMakeLists.txt
+└── main.cpp
+</code></pre><p>CMakeLists.txt:</p>
+<pre tabindex="0"><code>cmake_minimum_required(VERSION 3.20)
+project(Animal CXX)
+
+add_subdirectory(animal)
+
+add_executable(Animal main.cpp)
+
+#链接AnimalLib库
+target_link_libraries(Animal PUBLIC AnimalLib)
+
+#PROJECT_BINARY_DIR:build文件夹（构建生成文件的文件夹）     PROJECT_SOURCE_DIR:当前主目录； /animal：CMakeLists文件在/animal下
+target_include_directories(Animal PUBLIC &#34;${PROJECT_BINARY_DIR}&#34; &#34;${PROJECT_SOURCE_DIR}/animal&#34;)
+</code></pre><p>animal/CMakeLists.txt:</p>
+<pre tabindex="0"><code>#添加一个库
+add_library(AnimalLib cat.cpp dog.cpp)
+</code></pre><p>main中稍作修改：</p>
+<pre tabindex="0"><code>可以将
+#include &#34;animal/dog.h&#34;
+#include &#34;animal/cat.h&#34;
+
+修改为：
+#include &#34;dog.h&#34;
+#include &#34;cat.h&#34;
+</code></pre><p>执行</p>
+<pre tabindex="0"><code>rm -rf build
+
+cmake -B build 
+
+cmake --build build
+</code></pre><p><img src="E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&#43;&#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250517202644763.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250517202644763"
+	
+	
+></p>
+<h3 id="34-object-library-相当于33-的进一步解耦合">3.4 Object Library (相当于3.3 的进一步“解耦合”)
+</h3><p>修改</p>
+<p>./animal/CmakeLists.txt:</p>
+<pre tabindex="0"><code>add_library(AnimalLib OBJECT cat.cpp dog.cpp)
+target_include_directories(AnimalLib PUBLIC .)
+</code></pre><p>./CmakeLists.txt:</p>
+<pre tabindex="0"><code>cmake_minimum_required(VERSION 3.20)
+project(Animal CXX)
+
+add_subdirectory(animal)
+
+add_executable(Animal main.cpp)
+
+#链接AnimalLib库
+target_link_libraries(Animal PUBLIC AnimalLib)
+</code></pre><p>执行：</p>
+<pre tabindex="0"><code>rm -rf build
+
+cmake -B build 
+
+cmake --build build
+</code></pre><p><img src="E:%5cTypora-md%e7%ac%94%e8%ae%b0%5cC&#43;&#43;%e9%a1%b9%e7%9b%ae%e5%bc%80%e5%8f%91%5c%e9%a1%b9%e7%9b%ae%e6%9e%84%e5%bb%ba%5cimage-20250517202427286.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20250517202427286"
+	
+	
+></p>
+<h3 id="35-cmakelists嵌套-与-object-library的区别">3.5 CMakeLists嵌套 与 Object library的区别
+</h3><h4 id="351-关键区别分析">3.5.1 关键区别分析
+</h4><ol>
+<li>
+<p><strong>库类型不同</strong></p>
+<ul>
+<li><strong>第一种方法</strong>：<code>AnimalLib</code> 是一个静态库（<code>STATIC</code>），默认情况下 <code>add_library</code> 创建的是静态库。</li>
+<li><strong>第二种方法</strong>：<code>AnimalLib</code> 是一个对象库（<code>OBJECT</code>）。</li>
+</ul>
+</li>
+<li>
+<p><strong>包含目录设置位置</strong></p>
+<ul>
+<li><strong>第一种方法</strong>：在主目录的 <code>CMakeLists.txt</code> 中设置包含目录，确保 <code>main.cpp</code> 可以找到 <code>animal</code> 子目录中的头文件。</li>
+<li><strong>第二种方法</strong>：在子目录的 <code>CMakeLists.txt</code> 中设置包含目录，并通过 <code>PUBLIC</code> 传播到依赖 <code>AnimalLib</code> 的目标。</li>
+</ul>
+</li>
+<li>
+<p><strong>构建日志差异</strong></p>
+<ul>
+<li>
+<p><strong>第一种方法</strong>：构建日志中会显示静态库的链接步骤：</p>
+<pre tabindex="0"><code>[ 60%] Linking CXX static library libAnimalLib.a
+</code></pre></li>
+<li>
+<p><strong>第二种方法</strong>：构建日志中不会显示静态库的链接步骤，因为对象库不会生成独立的静态库文件。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="352-为什么第二种方法输出少了一句">3.5.2 为什么第二种方法输出少了一句
+</h4><p>在第二种方法中，<code>AnimalLib</code> 是一个对象库，对象库不会生成独立的静态库文件，而是直接将编译后的对象文件（<code>.o</code> 文件）提供给依赖它的目标（如 <code>Animal</code> 可执行文件）。因此，构建日志中不会显示静态库的链接步骤。</p>
+<h4 id="353-两种方法的便利之处">3.5.3 两种方法的便利之处
+</h4><ol>
+<li><strong>第一种方法（静态库）</strong>
+<ul>
+<li><strong>优势</strong>：
+<ul>
+<li>静态库可以独立于可执行文件进行构建和链接，便于复用。</li>
+<li>构建日志更详细，便于调试和验证每个阶段的构建结果。</li>
+</ul>
+</li>
+<li><strong>适用场景</strong>：
+<ul>
+<li>当需要将库作为独立组件复用时。</li>
+<li>当需要明确管理库的生成和链接步骤时。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>第二种方法（对象库）</strong>
+<ul>
+<li><strong>优势</strong>：
+<ul>
+<li>对象库允许直接复用对象文件，避免重复编译，提高构建效率。</li>
+<li>构建日志更简洁，减少冗余信息。</li>
+</ul>
+</li>
+<li><strong>适用场景</strong>：
+<ul>
+<li>当需要在多个目标之间共享相同的源文件编译结果时。</li>
+<li>当希望减少构建时间和日志输出时。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="354-总结">3.5.4 总结
+</h4><ul>
+<li><strong>第一种方法</strong>：适合需要明确管理静态库的生成和链接步骤的场景，构建日志更详细。</li>
+<li><strong>第二种方法</strong>：适合需要复用对象文件以提高构建效率的场景，构建日志更简洁。</li>
+</ul>
+<h2 id="四动态库静态库">四、动态库、静态库
+</h2><h2 id="五cmake与源文件交互">五、cmake与源文件交互
+</h2><h2 id="六条件编译">六、条件编译
+</h2>
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 My New Hugo Site
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.33c4d9161633cdbe92c3921813e058eca8c1703418315e9d07f6d141907c0ce6.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
